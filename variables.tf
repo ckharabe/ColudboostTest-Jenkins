@@ -18,21 +18,6 @@ variable "keyvault_tenant_id" {
   description = "The Azure Active Directory tenant ID that should be used for authenticating requests to the key vault. Get using 'az account show'."
 }
 
-# variable "keyvault_object_id" {
-#   type        = "string"
-#   description = "The object ID of a service principal in the Azure Active Directory tenant for the key vault. Get using 'az ad sp show'."
-# }
-
-# variable "keys_permissions" {
-#   type        = "list"
-#   description = "Permissions to keys in the vault. Valid values are: all, create, import, update, get, list, delete, backup, restore, encrypt, decrypt, wrapkey, unwrapkey, sign, and verify."
-# }
-
-# variable "secrets_permissions" {
-#   type        = "list"
-#   description = "Permissions to secrets in the vault. Valid values are: all, get, set, list, and delete."
-# }
-
 variable "sku_name" {
   type        = string
   default     = "Standard"
