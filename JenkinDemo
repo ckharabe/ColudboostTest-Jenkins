@@ -3,15 +3,13 @@ pipeline {
 
     stages {
         stage('Checkout') {
-      steps {
-        checkout scm
-        script {          
-              git branch: 'Main', credentialsId: 'Git', url: 'https://github.com/YogeshBaldha/ColudboostTest-Jenkins.git'
+        steps {
+            checkout scm
+            script {          
+                git branch: 'Main', credentialsId: 'Git', url: 'https://github.com/YogeshBaldha/ColudboostTest-Jenkins.git'
+                }
             }
-          }
-        }
-      }
-    }
+        }          
         stage('Build') {
             steps {
                 echo 'Building..'
