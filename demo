@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        
+        
+        
+        stages{
+    stage('checkout') {
+      steps {
+        checkout scm
+        
+        script {
+          withEnv(["GIT_ASKPASS=${WORKSPACE}/askpass.sh",]){
+            withCredentials([usernamePassword(credentialsId: 'az-devops-token', passwordVariable: 'GIT_PASSWORD',usernameVariable: 'GIT_USERNAME')]){
+              sh 'git submodule update --init'
+            }
+          }
+        }
+      }
+    }
+    
+    
+    stage ('init plan apply') {
+      steps {
+        script {
+          withEnv([
+            "GIT_ASKPASS=${WORKSPACE}/askpass.sh"]){
+            withCredentials([usernamePassword(credentialsId: "${env.AZ_DEVOPS_TOKEN}", 
+                                            passwordVariable: 'GIT_PASSWORD',
+                                            usernameVariable: 'GIT_USERNAME')]){
+              docker.withRegistry("${DOCKER_REGISTRY}", "${REGISTRY_CREDENTIALS}") {
+              
+                // Pull the Docker image from the registry
+                docker.image(TF_DOCKER_IMAGE).pull()
+                docker.image(TF_DOCKER_IMAGE).inside() {
+                
+                  sh 'az login --identity'
+                  sh 'az account set -s "${shrdsvc_subscription_id}"'
+                  for (stack in TF_STACK) {
+                    def TF_EXEC_PATH = stack
+                    def TF_BACKEND_CONF = "-backend-config='subscription_id=${env.gbl_subscription_id}' -backend-config='tenant_id=${env.tenant_id}' -backend-config='storage_account_name=dnvaascmn${env.gblsvc_environment}${env.tfstate}' -backend-config='resource_group_name=cmn-${env.gblsvc_environment}-${env.gbl_region_abbreviation}-gbltfstate-rg' -backend-config='key=${env.shrdsvc_environment}/${env.vertical}/shrd-${env.shrdsvc_region_abbreviation}/${stack}/terraform.tfstate'"
+                    def TF_COMMAND = "terraform init ${TF_BACKEND_CONF}; terraform plan -var-file terraform.${env.shrdsvc_environment}.${env.vertical}.${env.shrdsvc_region_abbreviation}.tfvars -detailed-exitcode;"
+                    def TF_COMMAND2 = "terraform apply -auto-approve -var-file terraform.${env.shrdsvc_environment}.${env.vertical}.${env.shrdsvc_region_abbreviation}.tfvars"
+                    def exists = fileExists "${TF_EXEC_PATH}/terraform.${env.shrdsvc_environment}.${env.vertical}.${env.shrdsvc_region_abbreviation}.tfvars"
+                    if (exists) {
+                    
+                    
+                    
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+    }
+}
