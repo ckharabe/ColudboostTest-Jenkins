@@ -11,8 +11,9 @@ pipeline {
             }
         }          
         stage('Build') {
-            steps {
-                echo 'Building..'
+            steps {                
+                sh "${env.TERRAFORM_HOME}/terraform init"
+                sh "${env.TERRAFORM_HOME}/terraform plan -out=tfplan"          
             }
         }               
         stage('Test') {
