@@ -13,7 +13,7 @@ pipeline {
         stage('Build') {
             steps {                
                 sh "terraform init"
-                sh "terraform plan -out tfplan -var-file='terraform.tfvars'"          
+                sh "terraform plan -out tfplan -var-file='variables.tf'"          
             }
         }               
         stage('Test') {
