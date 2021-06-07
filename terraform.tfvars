@@ -6,8 +6,6 @@ keyvault_name = "sogetitestKV"
 
 keyvault_tenant_id = "c7183232-e1e7-424d-9b37-ab787c4a6c0c"
 
-#keyvault_object_id = "REPLACE_WITH_OBJECT_ID"
-
 sku_name = "standard"
 
 enable_vault_for_deployment = "false"
