@@ -11,7 +11,8 @@ pipeline {
             }
         }          
         stage('Build') {
-            steps {                
+            steps {                        
+                sh az login --service-principal -u "38dd26af-4b26-455b-b5c9-604b095409b6" -p "de558c83-e825-4c7a-afd2-da939424dc9a" --tenant "c7183232-e1e7-424d-9b37-ab787c4a6c0c"                  
                 sh "terraform init -input=false"
                 sh "terraform plan -out tfplan -input=false -var-file='terraform.tfvars'"          
             }
