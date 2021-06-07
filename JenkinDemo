@@ -12,8 +12,8 @@ pipeline {
         }          
         stage('Build') {
             steps {                
-                sh "terraform init"
-                sh "terraform plan -out tfplan -var-file='variables.tf'"          
+                sh "terraform init -input=false"
+                sh "terraform plan -out tfplan -input=false -var-file='terraform.tfvars'"          
             }
         }               
         stage('Test') {
