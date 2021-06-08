@@ -6,7 +6,7 @@ pipeline {
         steps {
             checkout scm
             script {          
-                git branch: 'development', credentialsId: 'Git', url: 'https://github.com/YogeshBaldha/ColudboostTest-Jenkins.git'
+                git branch: 'development', credentialsId: 'Git', url: 'https://github.com/shivshankar-rajbhar/ColudboostTest-Jenkins.git'
                 }
             }
         }          
